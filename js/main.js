@@ -1,6 +1,8 @@
 const COUNT_OBJECTS = 25; //Для массива из 25 сгенерированных объектов
-const LIKES_MIN = 15;
-const LIKES_MAX = 200;
+const LikeCount = {
+  MIN: 15,
+  MAX: 200
+};
 const COUNT_COMMENTS = 30; // Максимальное кол-во комментариев под фотографией опубликованной пользователем
 const COUNT_AVATAR = 6; // Пользователей аватаров и имен
 
@@ -48,7 +50,7 @@ const getRandomInteger = (a, b) => {
 };
 
 // Создаем функцию для получения 1 комментария состоящего из 1 или 2 предложений, предложения выбираем из массива в случайном порядке, повторений быть не должно
-function createComment () {
+const createComment = () => {
   const countComment = getRandomInteger(1, 2); // Рандомно создаем число от 1 до 2, используем функцию
   const textComment = []; // Создаем пустой массив
   for (let i = 0; i < countComment; i++) { // Создаем цикл с счетчиком из ранее полученных рандомных чисел
@@ -60,49 +62,49 @@ function createComment () {
     textComment.push(comment); // добавляем уникальный коммент в массив
   }
   return textComment.join(' '); // возвращаем массив преобразованный в строку
-}
+};
 
-function createIdGenerator () {
+const createIdGenerator = () => {
   let lastGeneratedId = 0;
 
-  return function () {
+  return () => {
     lastGeneratedId += 1;
     return lastGeneratedId;
   };
-}
+};
 
-const idComment = createIdGenerator();
+const getIdComment = createIdGenerator();
 
-function createObjectComment () {
-  return {
-    name: NAMES[getRandomInteger(0, NAMES.length - 1)],
-    avatar: `img/avatar-${getRandomInteger(1, COUNT_AVATAR)}.svg`,
-    id: idComment(),
-    message: createComment()
-  };
-}
+const createComments = () => ({
+  name: NAMES[getRandomInteger(0, NAMES.length - 1)],
+  avatar: `img/avatar-${getRandomInteger(1, COUNT_AVATAR)}.svg`,
+  id: getIdComment(),
+  message: createComment()
+});
 
-function arrComment () {
+const getComments = () => {
   const arr = [];
   for (let i = 0; i < getRandomInteger(1, COUNT_COMMENTS); i++) {
-    arr.push(createObjectComment());
+    arr.push(createComments());
   }
   return arr;
-}
+};
 
-const idPhoto = createIdGenerator();
+const getIdPhoto = createIdGenerator();
+const id = getIdPhoto();
 
-function createObjectPhoto () {
-  return {
-    id: idPhoto(),
-    url: `photos/-${getRandomInteger(1, COUNT_OBJECTS)}.jpg`, // путь адрес картинки вида photos/{{i}}.jpg, где {{i}} — это число от 1 до 25. Адреса картинок не должны повторяться.
-    description: DESCRIPTION[getRandomInteger(0, DESCRIPTION.length - 1)],
-    likes: getRandomInteger(LIKES_MIN, LIKES_MAX), // 15 - 200
-    comments: arrComment() // количество комментариев к каждой фотографии от 1 до 30
-  };
-}
+const createPhoto = () => ({
+  id: id,
+  url: `photos/${id}.jpg`, // путь адрес картинки вида photos/{{i}}.jpg, где {{i}} — это число от 1 до 25. Адреса картинок не должны повторяться.
+  description: DESCRIPTION[getRandomInteger(0, DESCRIPTION.length - 1)],
+  likes: getRandomInteger(LikeCount.MIN, LikeCount.MAX), // 15 - 200
+  comments: getComments() // количество комментариев к каждой фотографии от 1 до 30
+});
 
-const arrPhoto = [];
-for (let i = 0; i < COUNT_OBJECTS; i++) {
-  arrPhoto.push(createObjectPhoto());
-}
+const getPhotos = () => {
+  const photos = [];
+  for (let i = 0; i < COUNT_OBJECTS; i++) {
+    photos.push(createPhoto());
+  }
+  return photos;
+};
