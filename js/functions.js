@@ -17,3 +17,23 @@ function isPalindrome(startString) {
 isPalindrome('топот');
 isPalindrome('ДовОд');
 isPalindrome('Кекс');
+
+function getMinutes (data) {
+  const getTime = data.split(':');
+  const convertHoursToMinutes = (parseInt(getTime[0], 10)) * 60;
+  const minutes = parseInt(getTime[1], 10);
+  return convertHoursToMinutes + minutes;
+}
+
+function meetNotWorkingDay (startWork, finishWork, meet, meetDuration) {
+  const startWorkMinutes = getMinutes(startWork);
+  const finishWorkMinutes = getMinutes(finishWork);
+  const meetMinutes = getMinutes(meet);
+  const result = finishWorkMinutes - meetMinutes;
+  if (meetMinutes >= startWorkMinutes && meetMinutes < finishWorkMinutes && result >= meetDuration) {
+    return true;
+  }
+  return false;
+}
+
+meetNotWorkingDay('8:00', '17:30', '08:00', 900);
