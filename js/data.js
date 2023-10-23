@@ -85,15 +85,17 @@ const getComments = () => {
 };
 
 const getIdPhoto = createIdGenerator();
-const id = getIdPhoto();
 
-const createPhoto = () => ({
-  id: id,
-  url: `photos/${id}.jpg`, // путь адрес картинки вида photos/{{i}}.jpg, где {{i}} — это число от 1 до 25. Адреса картинок не должны повторяться.
-  description: DESCRIPTION[getRandomInteger(0, DESCRIPTION.length - 1)],
-  likes: getRandomInteger(LikeCount.MIN, LikeCount.MAX), // 15 - 200
-  comments: getComments() // количество комментариев к каждой фотографии от 1 до 30
-});
+const createPhoto = () => {
+  const id = getIdPhoto();
+  return {
+    id: id,
+    url: `photos/${id}.jpg`, // путь адрес картинки вида photos/{{i}}.jpg, где {{i}} — это число от 1 до 25. Адреса картинок не должны повторяться.
+    description: DESCRIPTION[getRandomInteger(0, DESCRIPTION.length - 1)],
+    likes: getRandomInteger(LikeCount.MIN, LikeCount.MAX), // 15 - 200
+    comments: getComments() // количество комментариев к каждой фотографии от 1 до 30
+  };
+};
 
 const getPhotos = () => {
   const photos = [];
