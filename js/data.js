@@ -78,7 +78,8 @@ const createComments = () => ({
 
 const getComments = () => {
   const arr = [];
-  for (let i = 0; i < getRandomInteger(1, COUNT_COMMENTS); i++) {
+  const count = getRandomInteger(1, COUNT_COMMENTS);
+  for (let i = 0; i < count; i++) {
     arr.push(createComments());
   }
   return arr;
