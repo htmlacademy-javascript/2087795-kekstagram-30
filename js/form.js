@@ -44,15 +44,15 @@ const isTextFieldFocused = () => document.activeElement === hashtagFiled || docu
 const normalizeTags = (tagString) => tagString
   .trim()
   .split(' ')
-  .filter((tag) => Boolean(tag));
+  .filter((tag) => Boolean(tag.length));
 
 const hasValidTags = (value) => normalizeTags(value).every((tag) => VALID_SYMBOLS.test(tag));
 
-const hasValidCount = (value) => normalizeTags(value).lenght <= MAX_HASHTAG_COUNT;
+const hasValidCount = (value) => normalizeTags(value).length <= MAX_HASHTAG_COUNT;
 
 const hasUniqueTags = (value) => {
   const lowerCaseTags = normalizeTags(value).map((tag) => tag.toLowerCase());
-  return lowerCaseTags.lenght === new Set(lowerCaseTags).size;
+  return lowerCaseTags.length === new Set(lowerCaseTags).size;
 };
 
 function onDocumentKeydown(evt) {
