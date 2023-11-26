@@ -97,12 +97,12 @@ pristine.addValidator(
   true
 );
 
-const initUploaderPhoto = () => {
+const initUploadPhoto = () => {
   fileFiled.addEventListener('change', onFileInputChange);
   cancelButton.addEventListener('click', onCancelButtonClick);
   form.addEventListener('submit', onFormSubmit);
   initEffect();
 };
 
-export { initUploaderPhoto };
+export { initUploadPhoto };
 
