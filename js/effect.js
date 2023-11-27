@@ -3,7 +3,7 @@ const Effect = {
   CHROME: 'chrome',
   SEPIA: 'sepia',
   MARVIN: 'marvin',
-  PHOTOS: 'photos',
+  PHOBOS: 'phobos',
   HEAT: 'heat',
 };
 
@@ -20,7 +20,7 @@ const effectToFilter = {
     style: 'invert',
     unit: '%',
   },
-  [Effect.PHOTOS]: {
+  [Effect.PHOBOS]: {
     style: 'blur',
     unit: 'px',
   },
@@ -51,7 +51,7 @@ const effectToSliderOptions = {
     max: 100,
     step: 1,
   },
-  [Effect.PHOTOS]: {
+  [Effect.PHOBOS]: {
     min: 0,
     max: 3,
     step: 0.1,
