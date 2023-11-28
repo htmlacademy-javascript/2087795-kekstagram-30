@@ -1,11 +1,6 @@
 import { renderThumbnails } from './thumbnail.js';
 import { debounce } from './util.js';
 
-const filtersElement = document.querySelector('.img-filters');
-const filtersFormElement = document.querySelector('.img-filters__form');
-const filterButtonsElement = filtersFormElement.querySelectorAll('button');
-const pictureContainerElement = document.querySelector('.pictures');
-
 const MAX_RANDOM_FILTER = 10;
 
 const FiltersEnum = {
@@ -14,21 +9,26 @@ const FiltersEnum = {
   DISCUSSED: 'filter-discussed',
 };
 
+const filtersElement = document.querySelector('.img-filters');
+const filtersFormElement = document.querySelector('.img-filters__form');
+const filterButtonsElement = filtersFormElement.querySelectorAll('button');
+const pictureContainerElement = document.querySelector('.pictures');
+
 const getRandomIndex = (min, max) => Math.floor(Math.random() * (max - min));
 
 const filterHandlers = {
   [FiltersEnum.DEFAULT]: (data) => data,
 
   [FiltersEnum.RANDOM]: (data) => {
-    const randomIndexList = [];
+    const randomItems = [];
     const max = Math.min(MAX_RANDOM_FILTER, data.length);
-    while (randomIndexList.length < max) {
+    while (randomItems.length < max) {
       const index = getRandomIndex(0, data.length);
-      if (!randomIndexList.includes(index)){
-        randomIndexList.push(index);
+      if (!randomItems.includes(index)){
+        randomItems.push(index);
       }
     }
-    return randomIndexList.map((index) => data[index]);
+    return randomItems.map((index) => data[index]);
   },
 
   [FiltersEnum.DISCUSSED]: (data) => [...data].sort((item1, item2) => item2.comments.length - item1.comments.length),
