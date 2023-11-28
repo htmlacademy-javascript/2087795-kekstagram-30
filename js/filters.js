@@ -3,7 +3,7 @@ import { debounce } from './util.js';
 
 const filtersElement = document.querySelector('.img-filters');
 const filtersFormElement = document.querySelector('.img-filters__form');
-const filterButtons = filtersFormElement.querySelectorAll('button');
+const filterButtonsElement = filtersFormElement.querySelectorAll('button');
 const pictureContainerElement = document.querySelector('.pictures');
 
 const MAX_RANDOM_FILTER = 10;
@@ -51,7 +51,7 @@ const debouncedRepaint = debounce(repaint);
 
 const initFilters = (data) => {
   filtersElement.classList.remove('img-filters--inactive');
-  filterButtons.forEach((button) => {
+  filterButtonsElement.forEach((button) => {
     button.addEventListener('click', (event) => {
       const currentActiveElement = filtersFormElement.querySelector('.img-filters__button--active');
       currentActiveElement.classList.remove('img-filters__button--active');
