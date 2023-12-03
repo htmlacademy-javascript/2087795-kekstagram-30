@@ -24,15 +24,15 @@ const uploadFormElement = document.querySelector('.img-upload__form');
 const overlayElement = uploadFormElement.querySelector('.img-upload__overlay');
 const cancelButtonElement = uploadFormElement.querySelector('.img-upload__cancel');
 const fileFiledElement = uploadFormElement.querySelector('.img-upload__input');
-const hashtagFiledElement = uploadFormElement.querySelector('.text__hashtags');
-const commentFiledElement = uploadFormElement.querySelector('.text__description');
+const hashtagFieldElement = uploadFormElement.querySelector('.text__hashtags');
+const commentFieldElement = uploadFormElement.querySelector('.text__description');
 const submitButtonElement = uploadFormElement.querySelector('.img-upload__submit');
 const photoPreviewElement = uploadFormElement.querySelector('.img-upload__preview img');
 const effectsPreviewsElement = uploadFormElement.querySelectorAll('.effects__preview');
 
-const toggleSubmitButton = (isDisabled) => {
+const toggleSubmitButton = (isDisabled, text) => {
   submitButtonElement.disabled = isDisabled;
-  submitButtonElement.textContent = isDisabled ? SubmitButtonCaption.SUBMITTING : SubmitButtonCaption.IDLE;
+  submitButtonElement.textContent = text;
 };
 
 const pristine = new window.Pristine(uploadFormElement, {
@@ -57,7 +57,7 @@ const hideModal = () => {
   document.removeEventListener('keydown', onDocumentKeydown);
 };
 
-const isTextFieldFocused = () => document.activeElement === hashtagFiledElement || document.activeElement === commentFiledElement;
+const isTextFieldFocused = () => document.activeElement === hashtagFieldElement || document.activeElement === commentFieldElement;
 
 const normalizeTags = (tagString) => tagString
   .trim()
@@ -107,9 +107,9 @@ const sendForm = async(formElement) =>{
     return;
   }
   try{
-    toggleSubmitButton(true);
+    toggleSubmitButton(true, SubmitButtonCaption.SUBMITTING);
     await sendPicture(new FormData(formElement));
-    toggleSubmitButton(false);
+    toggleSubmitButton(false, SubmitButtonCaption.IDLE);
     hideModal();
     showSuccessMessage();
 
@@ -125,21 +125,21 @@ const onFormSubmit = (evt) => {
 };
 
 pristine.addValidator(
-  hashtagFiledElement,
+  hashtagFieldElement,
   hasValidCount,
   ErrorText.INVALID_COUNT,
   3,
   true
 );
 pristine.addValidator(
-  hashtagFiledElement,
+  hashtagFieldElement,
   hasUniqueTags,
   ErrorText.NOT_UNIQUE,
   2,
   true
 );
 pristine.addValidator(
-  hashtagFiledElement,
+  hashtagFieldElement,
   hasValidTags,
   ErrorText.INVALID_PATTERN,
   1,
