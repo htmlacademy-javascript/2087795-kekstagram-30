@@ -1,6 +1,5 @@
 const COMMENTS_COUNT_SHOW = 5;
 
-//Переменные для открытия и закрытия попапа
 const bigPictureElement = document.querySelector('.big-picture');
 const bodyElement = document.querySelector('body');
 const closePictureButtonElement = bigPictureElement.querySelector('#picture-cancel');
@@ -10,27 +9,21 @@ const commentCuntElement = bigPictureElement.querySelector('.social__comment-sho
 const totalCommentCountElement = bigPictureElement.querySelector('.social__comment-total-count');
 const commentsLoaderElement = bigPictureElement.querySelector('.comments-loader');
 
-//Находит шаблон, который мы ранее создали и в контенте шаблона находит элемент li
 const commentElement = document.querySelector('#comment').content.querySelector('.social__comment');
 
 let commentsCuntShown = 0;
 let comments = [];
 
-// Функция создает коментарий
 const createComment = ({avatar, message, name}) => {
-  //Новый комментарий равен глубокой копии элемента li из шаблона
   const newComment = commentElement.cloneNode(true);
-  //Находим в созданном комментарии img и прописываем заполнене атрибутов
   const socialPictureElement = newComment.querySelector('.social__picture');
   socialPictureElement.src = avatar;
   socialPictureElement.alt = name;
-  //Прописываем заполнение тега p
   newComment.querySelector('.social__text').textContent = message;
 
   return newComment;
 };
 
-//Функция отрисовывает комментарии
 const renderComments = () => {
   commentsCuntShown += COMMENTS_COUNT_SHOW;
 
@@ -52,7 +45,7 @@ const renderComments = () => {
   totalCommentCountElement.textContent = comments.length;
 };
 
-const onCommentsLoaderClock = () => renderComments();
+const onCommentsLoaderClick = () => renderComments();
 
 const hidePicture = () => {
   commentsCuntShown = 0;
@@ -72,7 +65,6 @@ function onDocumentKeydown(evt) {
   }
 }
 
-// Данная функция отрисовывает большое изображение в попап
 const renderPicture = ({ url, description, likes }) => {
   const imagePictureElement = bigPictureElement.querySelector('.big-picture__img img');
   imagePictureElement.src = url;
@@ -81,8 +73,6 @@ const renderPicture = ({ url, description, likes }) => {
   bigPictureElement.querySelector('.social__caption').textContent = description;
 };
 
-// Функция открывает попап и вызывает функцию отрисовки большого изображение, а сам обработчик находится на контейнере в котором лежат все привью
-// И добавлен обработчик на весь документ для закрытия попапа с клавиатуры
 const showPicture = (pictureData) => {
   bigPictureElement.classList.remove('hidden');
   bodyElement.classList.add('modal-open');
@@ -97,6 +87,6 @@ const showPicture = (pictureData) => {
 };
 
 closePictureButtonElement.addEventListener('click', onClosePictureButtonClik);
-commentsLoaderElement.addEventListener('click', onCommentsLoaderClock);
+commentsLoaderElement.addEventListener('click', onCommentsLoaderClick);
 
 export { showPicture };
